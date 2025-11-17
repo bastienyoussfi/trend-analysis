@@ -199,6 +199,7 @@ docker-compose build api
 ### Accessing Services
 
 - **API**: http://localhost:3002/api
+- **API Documentation (Swagger)**: http://localhost:3002/api/docs
 - **PostgreSQL**: `localhost:5432` (user: `postgres`, password: `postgres`, db: `trends_analyzer`)
 - **Redis**: `localhost:6379`
 
@@ -226,6 +227,25 @@ PORT=3002
 pnpm install
 pnpm start:dev
 ```
+
+## API Documentation
+
+### Swagger/OpenAPI Documentation
+
+Interactive API documentation is available via Swagger UI. Once the application is running, you can access it at:
+
+**Local Development**: http://localhost:3002/api/docs
+
+**With Docker**: http://localhost:3002/api/docs
+
+The Swagger UI provides:
+- Complete API endpoint documentation
+- Request/response schemas
+- Try-it-out functionality to test endpoints directly
+- Example requests and responses
+- Authentication support
+
+You can also export the OpenAPI specification in JSON format from the Swagger UI.
 
 ## API Endpoints
 
