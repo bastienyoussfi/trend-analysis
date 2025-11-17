@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: trends-analyzer-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: trends_analyzer
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - trends-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: trends-analyzer-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - trends-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # NestJS API Application
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: trends-analyzer-api
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    environment:
+      # Application
+      NODE_ENV: production
+      PORT: 3002
+
+      # Database Configuration
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_NAME: trends_analyzer
+      DATABASE_LOGGING: "false"
+      DATABASE_SSL: "false"
+
+      # Redis Configuration
+      REDIS_ENABLED: "true"
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      CACHE_TTL: 900
+
+      # API Keys (Add your actual keys in .env file)
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      TWITTER_API_KEY: ${TWITTER_API_KEY:-}
+      TWITTER_API_SECRET: ${TWITTER_API_SECRET:-}
+      TWITTER_ACCESS_TOKEN: ${TWITTER_ACCESS_TOKEN:-}
+      TWITTER_ACCESS_SECRET: ${TWITTER_ACCESS_SECRET:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - trends-network
+
+networks:
+  trends-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local

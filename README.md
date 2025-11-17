@@ -95,6 +95,138 @@ pnpm start:prod
 
 The API will be available at `http://localhost:3000/api`
 
+## Docker Setup (Recommended)
+
+The easiest way to get started is using Docker and Docker Compose. This will automatically set up PostgreSQL, Redis, and the API.
+
+### Prerequisites
+
+- Docker >= 20.10
+- Docker Compose >= 2.0
+
+### Quick Start with Docker
+
+1. **Clone the repository**
+
+```bash
+git clone <repository-url>
+cd trend-analysis
+```
+
+2. **Configure environment variables**
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and add your API keys:
+
+```env
+# Required: At least one AI provider
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Optional: Platform APIs
+TWITTER_API_KEY=your_twitter_api_key
+TWITTER_API_SECRET=your_twitter_api_secret
+TWITTER_ACCESS_TOKEN=your_twitter_access_token
+TWITTER_ACCESS_SECRET=your_twitter_access_secret
+```
+
+**Note**: For Docker, keep these settings in `.env`:
+- `DATABASE_HOST=postgres`
+- `REDIS_HOST=redis`
+- `PORT=3002`
+
+3. **Start all services**
+
+```bash
+docker-compose up -d
+```
+
+This will start:
+- **PostgreSQL** database on `localhost:5432`
+- **Redis** cache on `localhost:6379`
+- **API** application on `localhost:3002`
+
+4. **Verify services are running**
+
+```bash
+# Check container status
+docker-compose ps
+
+# View logs
+docker-compose logs -f api
+
+# Test the API
+curl http://localhost:3002/api/trends/health
+```
+
+5. **Stop services**
+
+```bash
+docker-compose down
+```
+
+To stop and remove all data (including database volumes):
+
+```bash
+docker-compose down -v
+```
+
+### Docker Commands
+
+```bash
+# Build and start services
+docker-compose up --build
+
+# Run in background
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Restart a specific service
+docker-compose restart api
+
+# Execute commands inside container
+docker-compose exec api sh
+
+# Rebuild the application
+docker-compose build api
+```
+
+### Accessing Services
+
+- **API**: http://localhost:3002/api
+- **PostgreSQL**: `localhost:5432` (user: `postgres`, password: `postgres`, db: `trends_analyzer`)
+- **Redis**: `localhost:6379`
+
+### Development with Docker
+
+To develop while using Docker for databases only:
+
+1. Start only the databases:
+
+```bash
+docker-compose up postgres redis -d
+```
+
+2. Update `.env` for local development:
+
+```env
+DATABASE_HOST=localhost
+REDIS_HOST=localhost
+PORT=3002
+```
+
+3. Run the app locally:
+
+```bash
+pnpm install
+pnpm start:dev
+```
+
 ## API Endpoints
 
 ### 1. Analyze Trends
