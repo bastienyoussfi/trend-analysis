@@ -73,7 +73,7 @@ export class TwitterStrategy implements PlatformStrategy {
     return mockPosts;
   }
 
-  async analyzeEngagement(postId: string): Promise<EngagementMetrics> {
+  async analyzeEngagement(_postId: string): Promise<EngagementMetrics> {
     // TODO: Implement actual Twitter API integration
 
     return {

@@ -193,9 +193,12 @@ export class InsightsGeneratorService {
         const avgEngagement = totalEngagement / data.posts.length;
 
         // Find engagement patterns
-        const avgLikes = data.posts.reduce((sum, p) => sum + p.engagementMetrics.likes, 0) / data.posts.length;
-        const avgShares = data.posts.reduce((sum, p) => sum + p.engagementMetrics.shares, 0) / data.posts.length;
-        const avgComments = data.posts.reduce((sum, p) => sum + p.engagementMetrics.comments, 0) / data.posts.length;
+        const avgLikes =
+          data.posts.reduce((sum, p) => sum + p.engagementMetrics.likes, 0) / data.posts.length;
+        const avgShares =
+          data.posts.reduce((sum, p) => sum + p.engagementMetrics.shares, 0) / data.posts.length;
+        const avgComments =
+          data.posts.reduce((sum, p) => sum + p.engagementMetrics.comments, 0) / data.posts.length;
 
         let pattern = 'balanced engagement';
         if (avgLikes > avgShares * 5 && avgLikes > avgComments * 5) {

@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import OpenAI from 'openai';
-import {
-  AIProvider,
-  AIResponse,
-  PerformancePrediction,
-} from '../interfaces/ai-provider.interface';
+import { AIProvider, AIResponse, PerformancePrediction } from '../interfaces/ai-provider.interface';
 
 @Injectable()
 export class OpenAIAdapter implements AIProvider {
@@ -25,7 +21,7 @@ export class OpenAIAdapter implements AIProvider {
     this.maxTokens = this.configService.get<number>('app.ai.openai.maxTokens');
   }
 
-  async analyzeContent(prompt: string, context?: any): Promise<AIResponse> {
+  async analyzeContent(prompt: string, _context?: any): Promise<AIResponse> {
     try {
       const completion = await this.client.chat.completions.create({
         model: this.model,

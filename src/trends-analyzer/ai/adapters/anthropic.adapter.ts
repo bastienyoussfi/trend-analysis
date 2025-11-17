@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Anthropic from '@anthropic-ai/sdk';
-import {
-  AIProvider,
-  AIResponse,
-  PerformancePrediction,
-} from '../interfaces/ai-provider.interface';
+import { AIProvider, AIResponse, PerformancePrediction } from '../interfaces/ai-provider.interface';
 
 @Injectable()
 export class AnthropicAdapter implements AIProvider {
@@ -25,7 +21,7 @@ export class AnthropicAdapter implements AIProvider {
     this.maxTokens = this.configService.get<number>('app.ai.anthropic.maxTokens');
   }
 
-  async analyzeContent(prompt: string, context?: any): Promise<AIResponse> {
+  async analyzeContent(prompt: string, _context?: any): Promise<AIResponse> {
     try {
       const message = await this.client.messages.create({
         model: this.model,

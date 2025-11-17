@@ -3,8 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Between } from 'typeorm';
 import { Analysis, GrowthTrend } from '../entities/analysis.entity';
 import { Trend } from '../entities/trend.entity';
-import { PlatformPost } from '../entities/platform-post.entity';
-import { Insight } from '../entities/insight.entity';
 import { AIFactoryService } from '../ai/ai-factory.service';
 import { PlatformFactoryService } from '../platforms/platform-factory.service';
 import { TrendsCollectorService } from './trends-collector.service';

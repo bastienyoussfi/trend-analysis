@@ -17,7 +17,9 @@ export class TrendsCollectorService {
   ) {}
 
   async collectTrendsData(topic: string, platforms: PlatformType[]) {
-    this.logger.log(`Collecting trends data for topic: ${topic} from ${platforms.length} platforms`);
+    this.logger.log(
+      `Collecting trends data for topic: ${topic} from ${platforms.length} platforms`,
+    );
 
     const platformData = await Promise.all(
       platforms.map(async (platformName) => {
@@ -79,7 +81,10 @@ export class TrendsCollectorService {
   }
 
   async getRecentTrends(platform?: PlatformType, limit = 20): Promise<Trend[]> {
-    const query = this.trendRepository.createQueryBuilder('trend').orderBy('trend.detectedAt', 'DESC').take(limit);
+    const query = this.trendRepository
+      .createQueryBuilder('trend')
+      .orderBy('trend.detectedAt', 'DESC')
+      .take(limit);
 
     if (platform) {
       query.where('trend.platform = :platform', { platform });

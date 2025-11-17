@@ -73,7 +73,7 @@ export class InstagramStrategy implements PlatformStrategy {
     return mockPosts;
   }
 
-  async analyzeEngagement(postId: string): Promise<EngagementMetrics> {
+  async analyzeEngagement(_postId: string): Promise<EngagementMetrics> {
     // TODO: Implement actual Instagram API integration
 
     return {
@@ -94,7 +94,7 @@ export class InstagramStrategy implements PlatformStrategy {
       { day: 'Monday', hour: 11, engagementScore: 0.82 },
       { day: 'Tuesday', hour: 11, engagementScore: 0.85 },
       { day: 'Wednesday', hour: 11, engagementScore: 0.88 },
-      { day: 'Wednesday', hour: 15, engagementScore: 0.90 },
+      { day: 'Wednesday', hour: 15, engagementScore: 0.9 },
       { day: 'Thursday', hour: 11, engagementScore: 0.87 },
       { day: 'Thursday', hour: 17, engagementScore: 0.89 },
       { day: 'Friday', hour: 9, engagementScore: 0.84 },

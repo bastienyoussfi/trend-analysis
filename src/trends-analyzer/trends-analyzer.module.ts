@@ -27,10 +27,7 @@ import { TwitterStrategy } from './platforms/strategies/twitter.strategy';
 import { InstagramStrategy } from './platforms/strategies/instagram.strategy';
 
 @Module({
-  imports: [
-    ConfigModule,
-    TypeOrmModule.forFeature([Trend, Analysis, PlatformPost, Insight]),
-  ],
+  imports: [ConfigModule, TypeOrmModule.forFeature([Trend, Analysis, PlatformPost, Insight])],
   controllers: [TrendsAnalyzerController],
   providers: [
     // Core Services
